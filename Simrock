@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Simrock</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Georgia, serif;
+  background: #f5f1e6; /* buchähnliches beige */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Überschrift */
+h1 {
+  margin-top: 30px;
+  font-size: 42px;
+}
+
+h2 {
+  margin-top: -10px;
+  font-weight: normal;
+  font-size: 18px;
+}
+
+/* Buch */
+.book {
+  margin-top: 30px;
+  width: 800px;
+  height: 500px;
+  background: #fffdf7;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  display: flex;
+  position: relative;
+}
+
+/* Falz */
+.spine {
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: rgba(0,0,0,0.1);
+}
+
+/* Seiten */
+.page {
+  width: 50%;
+  padding: 30px;
+  box-sizing: border-box;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.left {
+  border-right: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Lösungen */
+#solutions {
+  display: none;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Button im Buch */
+.toggle {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #444;
+  user-select: none;
+}
+
+/* Link unten */
+.link {
+  margin-top: 25px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #222;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Simrock</h1>
+<h2>eine kleine Auswahl</h2>
+
+<div class="book">
+
+  <div class="spine"></div>
+
+  <!-- linke Seite -->
+  <div class="page left">
+    Rätsel 1<br>[Platzhalter]<br><br>
+    Rätsel 2<br>[Platzhalter]<br><br>
+    Rätsel 3<br>[Platzhalter]
+  </div>
+
+  <!-- rechte Seite -->
+  <div class="page right">
+    Rätsel 4<br>[Platzhalter]<br><br>
+    Rätsel 5<br>[Platzhalter]
+
+    <div id="solutions">
+      <br>
+      Lösung 1<br>[Platzhalter]<br><br>
+      Lösung 2<br>[Platzhalter]<br><br>
+      Lösung 3<br>[Platzhalter]
+    </div>
+
+    <div class="toggle" onclick="toggleSolutions()">
+      Lösungen
+    </div>
+  </div>
+
+</div>
+
+<a class="link" href="video.html">Rheinsagen</a>
+
+<script>
+function toggleSolutions() {
+  const s = document.getElementById("solutions");
+  s.style.display = (s.style.display === "block") ? "none" : "block";
+}
+</script>
+
+</body>
+</html>
