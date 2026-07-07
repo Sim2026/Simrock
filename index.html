@@ -31,8 +31,8 @@ h2 {
 /* Buch */
 .book {
   margin-top: 30px;
-  width: 800px;
-  height: 500px;
+  width: 1000px;
+  height: 600px;
   background: #fffdf7;
   border-radius: 10px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
@@ -55,7 +55,7 @@ h2 {
 
 /* Seite */
 .page {
-  width: 100%;
+  width: 50%;
   padding: 35px;
   box-sizing: border-box;
   font-size: 18px;
@@ -124,8 +124,11 @@ h2 {
 
   <div class="spine"></div>
 
-  <div class="page" id="page">
-  </div>
+<div class="page left" id="leftPage">
+</div>
+
+<div class="page right" id="rightPage">
+</div>
 
   <button class="prev" onclick="prevPage()">
     ← Zurück
