@@ -79,7 +79,21 @@ h2 {
 .next:hover {
   text-decoration: underline;
 }
+.prev {
+  position: absolute;
+  left: 20px;
+  bottom: 15px;
+  border: none;
+  background: transparent;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  cursor: pointer;
+  color: #444;
+}
 
+.prev:hover {
+  text-decoration: underline;
+}
 
 /* Link unten */
 .link {
@@ -113,12 +127,15 @@ h2 {
   <div class="page" id="page">
   </div>
 
+  <button class="prev" onclick="prevPage()">
+    ← Zurück
+  </button>
+
   <button class="next" onclick="nextPage()">
     Weiter →
   </button>
 
 </div>
-
 
 <a class="link" href="video.html">
 Rheinsagen
