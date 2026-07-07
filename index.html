@@ -21,6 +21,7 @@ h1 {
   font-size: 42px;
 }
 
+
 h2 {
   margin-top: -10px;
   font-weight: normal;
@@ -48,8 +49,8 @@ h2 {
   position: relative;
 
   overflow: hidden;
-}
 
+}
 
 
 /* Falz */
@@ -57,11 +58,8 @@ h2 {
 .spine {
 
   position: absolute;
-
   left: 50%;
-
   top: 10px;
-
   bottom: 10px;
 
   width: 2px;
@@ -69,7 +67,6 @@ h2 {
   background: rgba(0,0,0,0.12);
 
 }
-
 
 
 /* Seiten */
@@ -82,7 +79,7 @@ h2 {
 
   padding: 40px;
 
-  padding-bottom: 90px;
+  padding-bottom: 100px;
 
   box-sizing: border-box;
 
@@ -95,7 +92,6 @@ h2 {
 }
 
 
-
 .left {
 
   border-right: 1px solid rgba(0,0,0,0.05);
@@ -104,13 +100,13 @@ h2 {
 
 
 
-/* Navigation */
+/* Buttons */
 
 button {
 
   position: absolute;
 
-  bottom: 20px;
+  bottom: 25px;
 
   border: none;
 
@@ -212,9 +208,12 @@ Weiter →
 
 
 
+
 <a class="link" href="video.html">
 Rheinsagen
 </a>
+
+
 
 
 
@@ -222,19 +221,24 @@ Rheinsagen
 
 
 /*
-====================================
-HIER DEINE RÄTSEL EINFÜGEN
+=====================================
+HIER WERDEN DIE BUCHSEITEN EINGETRAGEN
 
-Die <br> bleiben erhalten!
-====================================
+Jedes Objekt = eine Doppelseite
+links = linke Buchseite
+rechts = rechte Buchseite
+=====================================
 */
 
 
-const raetsel = [
+const pages = [
 
-`
 
-<strong>1.</strong><br><br>
+{
+
+left: `
+
+<strong>Rätsel 1</strong><br><br>
 
 Rathe, was ich hab vernommen:<br>
 Es sind achtzehn kleine Gesellen zur Welt gekommen,<br>
@@ -244,20 +248,33 @@ All ohne Fehler und Gebrechen,<br>
 Nur konnte Keiner Ein Wort sprechen;<br>
 Und damit man sie sollte verstehn,<br>
 Hatten sie fünf Dollmetscher mit sich gehn.<br>
+
 Das waren hochgelehrte Leut:<br>
 Der erst erstaunt, reißts Maul auf weit,<br>
 Der zweite wie ein Kindlein schreit,<br>
 Der dritte wie ein Mäuslein pfiff,<br>
 Der vierte wie ein Fuhrmann rief,<br>
 Der fünft gar wie ein Uhu thut:<br>
+
+`,
+
+right: `
+
+<strong>Rätsel 1 (Fortsetzung)</strong><br><br>
+
 Das waren ihre Künste gut,<br>
 Damit erhoben sie ein Geschrei,<br>
 Füllt noch die Welt, ist nicht vorbei.
 
-`,
-
-
 `
+
+},
+
+
+
+{
+
+left: `
 
 <strong>41.</strong><br><br>
 
@@ -268,151 +285,46 @@ Beißt alle Leut?
 
 `,
 
+right: `
+
+<strong>42.</strong><br><br>
+
+Hier kommt das nächste Rätsel.
 
 `
 
-<strong>Rätsel 3</strong><br><br>
+},
 
-Hier kommt das dritte Rätsel.
+
+
+{
+
+left: `
+
+<strong>Lösungen</strong><br><br>
+
+Lösung 1:<br>
+Hier steht die Antwort.
+
+`,
+
+right: `
+
+Lösung 2:<br>
+Hier steht die Antwort.
 
 `
+
+}
+
 
 ];
 
 
 
-let pages = [];
+
 
 let current = 0;
-
-
-
-/*
-Teilt die Texte anhand der echten Seitenhöhe
-*/
-
-function createPages(){
-
-
-let left = "";
-let right = "";
-
-let side = "left";
-
-
-
-let test = document.createElement("div");
-
-test.className = "page";
-
-test.style.position = "absolute";
-test.style.visibility = "hidden";
-
-document.body.appendChild(test);
-
-
-
-raetsel.forEach(text => {
-
-
-let lines = text.split("<br>");
-
-
-
-lines.forEach(line => {
-
-
-let currentText = line + "<br>";
-
-
-
-test.innerHTML = (side === "left" ? left : right) + currentText;
-
-
-
-if(test.scrollHeight <= test.clientHeight){
-
-
-if(side === "left"){
-
-left += currentText;
-
-}
-
-else {
-
-right += currentText;
-
-}
-
-
-}
-
-else {
-
-
-if(side === "left"){
-
-
-side = "right";
-
-right += currentText;
-
-
-}
-
-else {
-
-
-pages.push({
-
-left:left,
-
-right:right
-
-});
-
-
-left = currentText;
-
-right = "";
-
-side = "left";
-
-
-}
-
-
-}
-
-
-
-});
-
-
-
-});
-
-
-
-if(left || right){
-
-pages.push({
-
-left:left,
-
-right:right
-
-});
-
-}
-
-
-document.body.removeChild(test);
-
-
-}
-
 
 
 
@@ -420,21 +332,21 @@ function showPage(){
 
 
 document.getElementById("leftPage").innerHTML =
-pages[current]?.left || "";
+pages[current].left;
 
 
 document.getElementById("rightPage").innerHTML =
-pages[current]?.right || "";
+pages[current].right;
 
 
 }
 
 
 
+
 function nextPage(){
 
-
-if(current < pages.length-1){
+if(current < pages.length - 1){
 
 current++;
 
@@ -446,8 +358,8 @@ showPage();
 
 
 
-function backPage(){
 
+function backPage(){
 
 if(current > 0){
 
@@ -460,8 +372,6 @@ showPage();
 }
 
 
-
-createPages();
 
 showPage();
 
