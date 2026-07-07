@@ -21,11 +21,13 @@ h1 {
   font-size: 42px;
 }
 
+
 h2 {
   margin-top: -10px;
   font-weight: normal;
   font-size: 18px;
 }
+
 
 
 /* Buch */
@@ -43,6 +45,7 @@ h2 {
 }
 
 
+
 /* Falz */
 
 .spine {
@@ -51,21 +54,29 @@ h2 {
   top: 10px;
   bottom: 10px;
   width: 2px;
-  background: rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.12);
 }
+
 
 
 /* Seiten */
 
 .page {
+
   width: 50%;
+  height: 100%;
+
   padding: 40px;
-  padding-bottom: 80px;
+  padding-bottom: 90px;
+
   box-sizing: border-box;
+
   font-size: 18px;
   line-height: 1.6;
+
   overflow: hidden;
 }
+
 
 
 .left {
@@ -73,10 +84,11 @@ h2 {
 }
 
 
-/* Buttons */
 
-.prev,
-.next {
+
+/* Navigation */
+
+button {
 
   position: absolute;
   bottom: 20px;
@@ -93,30 +105,31 @@ h2 {
 }
 
 
-.prev {
-  left: 25px;
-}
-
-
-.next {
-  right: 25px;
-}
-
-
-.prev:hover,
-.next:hover {
+button:hover {
   text-decoration: underline;
 }
 
 
-/* Link */
+#back {
+  left: 25px;
+}
+
+
+#next {
+  right: 25px;
+}
+
+
+
 
 .link {
 
   margin-top: 25px;
+
   font-size: 20px;
-  cursor: pointer;
+
   color: #222;
+
   text-decoration: none;
 
 }
@@ -132,6 +145,7 @@ h2 {
 </head>
 
 
+
 <body>
 
 
@@ -140,7 +154,9 @@ h2 {
 
 
 
+
 <div class="book">
+
 
 <div class="spine"></div>
 
@@ -150,17 +166,18 @@ h2 {
 <div class="page" id="rightPage"></div>
 
 
-<button class="prev" onclick="previousPage()">
+<button id="back" onclick="previousPage()">
 ← Zurück
 </button>
 
 
-<button class="next" onclick="nextPage()">
+<button id="next" onclick="nextPage()">
 Weiter →
 </button>
 
 
 </div>
+
 
 
 
@@ -171,17 +188,18 @@ Rheinsagen
 
 
 
+
 <script>
 
 
 /*
-Hier kommen deine Rätsel hinein.
-Du brauchst KEINE Seitenumbrüche mehr setzen.
+====================================
+HIER NUR DIE TEXTE ÄNDERN
+====================================
 */
 
 
 const raetsel = [
-
 
 `
 <strong>Rätsel 1</strong><br><br>
@@ -213,7 +231,7 @@ Füllt noch die Welt, ist nicht vorbei.
 Hier kommt der Text des zweiten Rätsels.
 <br><br>
 
-Du kannst hier beliebig lange Texte einfügen.
+Du kannst hier später weitere Rätsel einfügen.
 `,
 
 
@@ -228,64 +246,52 @@ Hier kommt der Text des dritten Rätsels.
 
 
 
+
 let bookPages = [];
 
-let current = 0;
+let currentPage = 0;
 
 
 
-/*
-Erzeugt automatisch Buchseiten
-*/
-
-function createPages(){
+function splitText(){
 
 
-let container = document.createElement("div");
+let tester = document.createElement("div");
 
-container.style.width = "420px";
-container.style.fontSize = "18px";
-container.style.lineHeight = "1.6";
+
+tester.className = "page";
+
+tester.style.position = "absolute";
+tester.style.visibility = "hidden";
+
+document.body.appendChild(tester);
+
 
 
 raetsel.forEach(text => {
 
 
-container.innerHTML = text;
-
-
-let words = container.innerHTML.split(" ");
+let words = text.split(" ");
 
 let left = "";
 let right = "";
 
 
-let temp = document.createElement("div");
-
-temp.className = "page";
-
-
-
 for(let word of words){
 
+tester.innerHTML = left + word + " ";
 
-temp.innerHTML = left + word + " ";
-
-
-if(temp.scrollHeight <= 480){
+if(tester.scrollHeight <= tester.clientHeight){
 
 left += word + " ";
 
 }
+
 else {
 
 right += word + " ";
 
 }
-
-
-temp.innerHTML = left;
-
 
 }
 
@@ -302,7 +308,12 @@ right:right
 });
 
 
+
+document.body.removeChild(tester);
+
+
 }
+
 
 
 
@@ -311,35 +322,42 @@ function showPage(){
 
 
 document.getElementById("leftPage").innerHTML =
-bookPages[current].left;
+bookPages[currentPage]?.left || "";
 
 
 document.getElementById("rightPage").innerHTML =
-bookPages[current].right;
+bookPages[currentPage]?.right || "";
 
 
 }
+
+
 
 
 
 function nextPage(){
 
-if(current < bookPages.length - 1){
 
-current++;
+if(currentPage < bookPages.length - 1){
+
+currentPage++;
+
 showPage();
 
 }
 
 }
+
 
 
 
 function previousPage(){
 
-if(current > 0){
 
-current--;
+if(currentPage > 0){
+
+currentPage--;
+
 showPage();
 
 }
@@ -348,7 +366,9 @@ showPage();
 
 
 
-createPages();
+
+
+splitText();
 
 showPage();
 
@@ -357,6 +377,6 @@ showPage();
 </script>
 
 
+
 </body>
 </html>
-
