@@ -21,7 +21,6 @@ h1 {
   font-size: 42px;
 }
 
-
 h2 {
   margin-top: -10px;
   font-weight: normal;
@@ -29,18 +28,25 @@ h2 {
 }
 
 
-
 /* Buch */
 
 .book {
+
   margin-top: 30px;
-  width: 1000px;
-  height: 600px;
+
+  width: 1200px;
+  height: 650px;
+
   background: #fffdf7;
+
   border-radius: 10px;
+
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+
   display: flex;
+
   position: relative;
+
   overflow: hidden;
 }
 
@@ -49,12 +55,19 @@ h2 {
 /* Falz */
 
 .spine {
+
   position: absolute;
+
   left: 50%;
+
   top: 10px;
+
   bottom: 10px;
+
   width: 2px;
+
   background: rgba(0,0,0,0.12);
+
 }
 
 
@@ -64,25 +77,30 @@ h2 {
 .page {
 
   width: 50%;
+
   height: 100%;
 
   padding: 40px;
+
   padding-bottom: 90px;
 
   box-sizing: border-box;
 
   font-size: 18px;
+
   line-height: 1.6;
 
   overflow: hidden;
+
 }
 
 
 
 .left {
-  border-right: 1px solid rgba(0,0,0,0.05);
-}
 
+  border-right: 1px solid rgba(0,0,0,0.05);
+
+}
 
 
 
@@ -91,36 +109,47 @@ h2 {
 button {
 
   position: absolute;
+
   bottom: 20px;
 
   border: none;
+
   background: transparent;
 
   font-family: Georgia, serif;
+
   font-size: 18px;
 
   cursor: pointer;
+
   color: #444;
 
 }
 
 
 button:hover {
+
   text-decoration: underline;
+
 }
 
 
 #back {
+
   left: 25px;
+
 }
 
 
 #next {
+
   right: 25px;
+
 }
 
 
 
+/* Link */
 
 .link {
 
@@ -136,7 +165,9 @@ button:hover {
 
 
 .link:hover {
+
   text-decoration: underline;
+
 }
 
 
@@ -145,13 +176,12 @@ button:hover {
 </head>
 
 
-
 <body>
 
 
 <h1>Simrock</h1>
-<h2>eine kleine Auswahl</h2>
 
+<h2>eine kleine Auswahl</h2>
 
 
 
@@ -163,10 +193,12 @@ button:hover {
 
 <div class="page left" id="leftPage"></div>
 
+
 <div class="page" id="rightPage"></div>
 
 
-<button id="back" onclick="previousPage()">
+
+<button id="back" onclick="backPage()">
 ← Zurück
 </button>
 
@@ -180,12 +212,9 @@ Weiter →
 
 
 
-
 <a class="link" href="video.html">
 Rheinsagen
 </a>
-
-
 
 
 
@@ -194,7 +223,9 @@ Rheinsagen
 
 /*
 ====================================
-HIER NUR DIE TEXTE ÄNDERN
+HIER DEINE RÄTSEL EINFÜGEN
+
+Die <br> bleiben erhalten!
 ====================================
 */
 
@@ -202,6 +233,7 @@ HIER NUR DIE TEXTE ÄNDERN
 const raetsel = [
 
 `
+
 <strong>Rätsel 1</strong><br><br>
 
 Rathe, was ich hab vernommen:<br>
@@ -212,7 +244,6 @@ All ohne Fehler und Gebrechen,<br>
 Nur konnte Keiner Ein Wort sprechen;<br>
 Und damit man sie sollte verstehn,<br>
 Hatten sie fünf Dollmetscher mit sich gehn.<br>
-
 Das waren hochgelehrte Leut:<br>
 Der erst erstaunt, reißts Maul auf weit,<br>
 Der zweite wie ein Kindlein schreit,<br>
@@ -222,98 +253,162 @@ Der fünft gar wie ein Uhu thut:<br>
 Das waren ihre Künste gut,<br>
 Damit erhoben sie ein Geschrei,<br>
 Füllt noch die Welt, ist nicht vorbei.
+
 `,
 
 
 `
+
 <strong>Rätsel 2</strong><br><br>
 
-Hier kommt der Text des zweiten Rätsels.
-<br><br>
+Hier kommt das zweite Rätsel.
 
-Du kannst hier später weitere Rätsel einfügen.
 `,
 
 
 `
+
 <strong>Rätsel 3</strong><br><br>
 
-Hier kommt der Text des dritten Rätsels.
-`
+Hier kommt das dritte Rätsel.
 
+`
 
 ];
 
 
 
+let pages = [];
 
-let bookPages = [];
-
-let currentPage = 0;
-
+let current = 0;
 
 
-function splitText(){
+
+/*
+Teilt die Texte anhand der echten Seitenhöhe
+*/
+
+function createPages(){
 
 
-let tester = document.createElement("div");
+let left = "";
+let right = "";
+
+let side = "left";
 
 
-tester.className = "page";
 
-tester.style.position = "absolute";
-tester.style.visibility = "hidden";
+let test = document.createElement("div");
 
-document.body.appendChild(tester);
+test.className = "page";
+
+test.style.position = "absolute";
+test.style.visibility = "hidden";
+
+document.body.appendChild(test);
 
 
 
 raetsel.forEach(text => {
 
 
-let words = text.split(" ");
-
-let left = "";
-let right = "";
+let lines = text.split("<br>");
 
 
-for(let word of words){
 
-tester.innerHTML = left + word + " ";
+lines.forEach(line => {
 
-if(tester.scrollHeight <= tester.clientHeight){
 
-left += word + " ";
+let currentText = line + "<br>";
+
+
+
+test.innerHTML = (side === "left" ? left : right) + currentText;
+
+
+
+if(test.scrollHeight <= test.clientHeight){
+
+
+if(side === "left"){
+
+left += currentText;
 
 }
 
 else {
 
-right += word + " ";
+right += currentText;
 
 }
 
+
 }
 
+else {
 
 
-bookPages.push({
+if(side === "left"){
+
+
+side = "right";
+
+right += currentText;
+
+
+}
+
+else {
+
+
+pages.push({
 
 left:left,
+
 right:right
 
 });
 
 
-});
+left = currentText;
 
+right = "";
 
-
-document.body.removeChild(tester);
+side = "left";
 
 
 }
 
+
+}
+
+
+
+});
+
+
+
+});
+
+
+
+if(left || right){
+
+pages.push({
+
+left:left,
+
+right:right
+
+});
+
+}
+
+
+document.body.removeChild(test);
+
+
+}
 
 
 
@@ -322,41 +417,23 @@ function showPage(){
 
 
 document.getElementById("leftPage").innerHTML =
-bookPages[currentPage]?.left || "";
+pages[current]?.left || "";
 
 
 document.getElementById("rightPage").innerHTML =
-bookPages[currentPage]?.right || "";
+pages[current]?.right || "";
 
 
 }
-
-
 
 
 
 function nextPage(){
 
 
-if(currentPage < bookPages.length - 1){
+if(current < pages.length-1){
 
-currentPage++;
-
-showPage();
-
-}
-
-}
-
-
-
-
-function previousPage(){
-
-
-if(currentPage > 0){
-
-currentPage--;
+current++;
 
 showPage();
 
@@ -366,17 +443,29 @@ showPage();
 
 
 
+function backPage(){
 
 
-splitText();
+if(current > 0){
+
+current--;
 
 showPage();
 
+}
+
+}
+
+
+
+createPages();
+
+showPage();
 
 
 </script>
 
 
-
 </body>
 </html>
+
