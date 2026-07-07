@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -15,7 +16,9 @@ body {
   align-items: center;
 }
 
+
 /* Überschrift */
+
 h1 {
   margin-top: 30px;
   font-size: 42px;
@@ -29,6 +32,7 @@ h2 {
 
 
 /* Buch */
+
 .book {
   margin-top: 30px;
   width: 1000px;
@@ -43,6 +47,7 @@ h2 {
 
 
 /* Buchfalz */
+
 .spine {
   position: absolute;
   left: 50%;
@@ -53,21 +58,28 @@ h2 {
 }
 
 
-/* Seite */
+/* Seiten */
+
 .page {
   width: 50%;
-  padding: 35px;
+  padding: 40px;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 1.6;
 }
 
 
-/* Weiter Button */
+.left {
+  border-right: 1px solid rgba(0,0,0,0.05);
+}
+
+
+/* Buttons */
+
 .next {
   position: absolute;
-  right: 20px;
-  bottom: 15px;
+  right: 25px;
+  bottom: 20px;
   border: none;
   background: transparent;
   font-family: Georgia, serif;
@@ -76,13 +88,11 @@ h2 {
   color: #444;
 }
 
-.next:hover {
-  text-decoration: underline;
-}
+
 .prev {
   position: absolute;
-  left: 20px;
-  bottom: 15px;
+  left: 25px;
+  bottom: 20px;
   border: none;
   background: transparent;
   font-family: Georgia, serif;
@@ -91,11 +101,15 @@ h2 {
   color: #444;
 }
 
+
+.next:hover,
 .prev:hover {
   text-decoration: underline;
 }
 
+
 /* Link unten */
+
 .link {
   margin-top: 25px;
   font-size: 20px;
@@ -104,9 +118,11 @@ h2 {
   text-decoration: none;
 }
 
+
 .link:hover {
   text-decoration: underline;
 }
+
 
 </style>
 
@@ -120,25 +136,33 @@ h2 {
 <h2>eine kleine Auswahl</h2>
 
 
+
 <div class="book">
 
   <div class="spine"></div>
 
-<div class="page left" id="leftPage">
-</div>
 
-<div class="page right" id="rightPage">
-</div>
+  <div class="page left" id="leftPage">
+  </div>
+
+
+  <div class="page right" id="rightPage">
+  </div>
+
 
   <button class="prev" onclick="prevPage()">
     ← Zurück
   </button>
 
+
   <button class="next" onclick="nextPage()">
     Weiter →
   </button>
 
+
 </div>
+
+
 
 <a class="link" href="video.html">
 Rheinsagen
@@ -152,7 +176,8 @@ Rheinsagen
 const pages = [
 
 
-`
+{
+left: `
 <strong>Rätsel 1</strong><br><br>
 
 Rathe, was ich hab vernommen:<br>
@@ -161,14 +186,13 @@ Von Angesicht gar säuberlich,<br>
 keiner doch dem Andern glich.<br>
 All ohne Fehler und Gebrechen,<br>
 Nur konnte Keiner Ein Wort sprechen;<br>
-Und damit man sie sollte verstehn,<br>
-Hatten sie fünf Dollmetscher mit sich gehn.
+Und damit man sie sollte verstehn,
 `,
 
-
-`
+right: `
 <strong>Rätsel 1 (Fortsetzung)</strong><br><br>
 
+Hatten sie fünf Dollmetscher mit sich gehn.<br>
 Das waren hochgelehrte Leut:<br>
 Der erst erstaunt, reißts Maul auf weit,<br>
 Der zweite wie ein Kindlein schreit,<br>
@@ -178,77 +202,101 @@ Der fünft gar wie ein Uhu thut:<br>
 Das waren ihre Künste gut,<br>
 Damit erhoben sie ein Geschrei,<br>
 Füllt noch die Welt, ist nicht vorbei.
-`,
-
-
 `
+},
+
+
+
+{
+left: `
 <strong>Rätsel 2</strong><br><br>
 
 Hier kommt der Text des zweiten Rätsels.
 <br><br>
 
-Noch kannst du weitere Rätsel hier ergänzen.
+Der Text kann beliebig erweitert werden.
 `,
 
+right: `
+<strong>Rätsel 2 (Fortsetzung)</strong><br><br>
 
+Hier geht das zweite Rätsel weiter.
 `
+},
+
+
+
+{
+left: `
 <strong>Rätsel 3</strong><br><br>
 
 Hier kommt der Text des dritten Rätsels.
 `,
 
-
-`
+right: `
 <strong>Lösungen</strong><br><br>
 
 Lösung 1:<br>
-Hier steht die Antwort auf Rätsel 1.<br><br>
+Antwort auf Rätsel 1.<br><br>
 
 Lösung 2:<br>
-Hier steht die Antwort auf Rätsel 2.<br><br>
-
-Lösung 3:<br>
-Hier steht die Antwort auf Rätsel 3.
+Antwort auf Rätsel 2.
 `
+}
+
 
 ];
+
 
 
 let currentPage = 0;
 
 
+
 function showPage(){
 
-  document.getElementById("page").innerHTML = pages[currentPage];
+document.getElementById("leftPage").innerHTML =
+pages[currentPage].left;
+
+
+document.getElementById("rightPage").innerHTML =
+pages[currentPage].right;
 
 }
+
 
 
 function nextPage(){
 
-  if(currentPage < pages.length - 1){
+if(currentPage < pages.length - 1){
 
-    currentPage++;
-    showPage();
-
-  }
+currentPage++;
+showPage();
 
 }
+
+}
+
+
+
 function prevPage(){
 
-  if(currentPage > 0){
+if(currentPage > 0){
 
-    currentPage--;
-    showPage();
-
-  }
+currentPage--;
+showPage();
 
 }
+
+}
+
+
 
 showPage();
 
 
 </script>
+
 
 
 </body>
