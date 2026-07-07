@@ -16,8 +16,6 @@ body {
 }
 
 
-/* Überschrift */
-
 h1 {
   margin-top: 30px;
   font-size: 42px;
@@ -45,7 +43,7 @@ h2 {
 }
 
 
-/* Buchfalz */
+/* Falz */
 
 .spine {
   position: absolute;
@@ -62,9 +60,11 @@ h2 {
 .page {
   width: 50%;
   padding: 40px;
+  padding-bottom: 80px;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 1.6;
+  overflow: hidden;
 }
 
 
@@ -75,46 +75,50 @@ h2 {
 
 /* Buttons */
 
+.prev,
 .next {
+
   position: absolute;
-  right: 25px;
   bottom: 20px;
+
   border: none;
   background: transparent;
+
   font-family: Georgia, serif;
   font-size: 18px;
+
   cursor: pointer;
   color: #444;
+
 }
 
 
 .prev {
-  position: absolute;
   left: 25px;
-  bottom: 20px;
-  border: none;
-  background: transparent;
-  font-family: Georgia, serif;
-  font-size: 18px;
-  cursor: pointer;
-  color: #444;
 }
 
 
-.next:hover,
-.prev:hover {
+.next {
+  right: 25px;
+}
+
+
+.prev:hover,
+.next:hover {
   text-decoration: underline;
 }
 
 
-/* Link unten */
+/* Link */
 
 .link {
+
   margin-top: 25px;
   font-size: 20px;
   cursor: pointer;
   color: #222;
   text-decoration: none;
+
 }
 
 
@@ -138,25 +142,22 @@ h2 {
 
 <div class="book">
 
-  <div class="spine"></div>
+<div class="spine"></div>
 
 
-  <div class="page left" id="leftPage">
-  </div>
+<div class="page left" id="leftPage"></div>
+
+<div class="page" id="rightPage"></div>
 
 
-  <div class="page right" id="rightPage">
-  </div>
+<button class="prev" onclick="previousPage()">
+← Zurück
+</button>
 
 
-  <button class="prev" onclick="prevPage()">
-    ← Zurück
-  </button>
-
-
-  <button class="next" onclick="nextPage()">
-    Weiter →
-  </button>
+<button class="next" onclick="nextPage()">
+Weiter →
+</button>
 
 
 </div>
@@ -169,14 +170,20 @@ Rheinsagen
 
 
 
+
 <script>
 
 
-const pages = [
+/*
+Hier kommen deine Rätsel hinein.
+Du brauchst KEINE Seitenumbrüche mehr setzen.
+*/
 
 
-{
-left: `
+const raetsel = [
+
+
+`
 <strong>Rätsel 1</strong><br><br>
 
 Rathe, was ich hab vernommen:<br>
@@ -185,13 +192,9 @@ Von Angesicht gar säuberlich,<br>
 keiner doch dem Andern glich.<br>
 All ohne Fehler und Gebrechen,<br>
 Nur konnte Keiner Ein Wort sprechen;<br>
-Und damit man sie sollte verstehn,
-`,
-
-right: `
-<strong>Rätsel 1 (Fortsetzung)</strong><br><br>
-
+Und damit man sie sollte verstehn,<br>
 Hatten sie fünf Dollmetscher mit sich gehn.<br>
+
 Das waren hochgelehrte Leut:<br>
 Der erst erstaunt, reißts Maul auf weit,<br>
 Der zweite wie ein Kindlein schreit,<br>
@@ -201,65 +204,119 @@ Der fünft gar wie ein Uhu thut:<br>
 Das waren ihre Künste gut,<br>
 Damit erhoben sie ein Geschrei,<br>
 Füllt noch die Welt, ist nicht vorbei.
+`,
+
+
 `
-},
-
-
-
-{
-left: `
 <strong>Rätsel 2</strong><br><br>
 
 Hier kommt der Text des zweiten Rätsels.
 <br><br>
 
-Der Text kann beliebig erweitert werden.
+Du kannst hier beliebig lange Texte einfügen.
 `,
 
-right: `
-<strong>Rätsel 2 (Fortsetzung)</strong><br><br>
 
-Hier geht das zweite Rätsel weiter.
 `
-},
-
-
-
-{
-left: `
 <strong>Rätsel 3</strong><br><br>
 
 Hier kommt der Text des dritten Rätsels.
-`,
-
-right: `
-<strong>Lösungen</strong><br><br>
-
-Lösung 1:<br>
-Antwort auf Rätsel 1.<br><br>
-
-Lösung 2:<br>
-Antwort auf Rätsel 2.
 `
-}
 
 
 ];
 
 
 
-let currentPage = 0;
+let bookPages = [];
+
+let current = 0;
+
+
+
+/*
+Erzeugt automatisch Buchseiten
+*/
+
+function createPages(){
+
+
+let container = document.createElement("div");
+
+container.style.width = "420px";
+container.style.fontSize = "18px";
+container.style.lineHeight = "1.6";
+
+
+raetsel.forEach(text => {
+
+
+container.innerHTML = text;
+
+
+let words = container.innerHTML.split(" ");
+
+let left = "";
+let right = "";
+
+
+let temp = document.createElement("div");
+
+temp.className = "page";
+
+
+
+for(let word of words){
+
+
+temp.innerHTML = left + word + " ";
+
+
+if(temp.scrollHeight <= 480){
+
+left += word + " ";
+
+}
+else {
+
+right += word + " ";
+
+}
+
+
+temp.innerHTML = left;
+
+
+}
+
+
+
+bookPages.push({
+
+left:left,
+right:right
+
+});
+
+
+});
+
+
+}
+
 
 
 
 function showPage(){
 
+
 document.getElementById("leftPage").innerHTML =
-pages[currentPage].left;
+bookPages[current].left;
 
 
 document.getElementById("rightPage").innerHTML =
-pages[currentPage].right;
+bookPages[current].right;
+
 
 }
 
@@ -267,9 +324,9 @@ pages[currentPage].right;
 
 function nextPage(){
 
-if(currentPage < pages.length - 1){
+if(current < bookPages.length - 1){
 
-currentPage++;
+current++;
 showPage();
 
 }
@@ -278,11 +335,11 @@ showPage();
 
 
 
-function prevPage(){
+function previousPage(){
 
-if(currentPage > 0){
+if(current > 0){
 
-currentPage--;
+current--;
 showPage();
 
 }
@@ -291,13 +348,15 @@ showPage();
 
 
 
+createPages();
+
 showPage();
+
 
 
 </script>
 
 
-
 </body>
 </html>
-```
+
