@@ -356,6 +356,39 @@ document.getElementById("rightPage").innerHTML =
 pages[current].right;
 
 
+
+// Zurück-Button auf der ersten Seite verstecken
+
+if(current === 0){
+
+document.getElementById("back").style.display = "none";
+
+}
+else {
+
+document.getElementById("back").style.display = "block";
+
+}
+
+
+
+// Text des Weiter-Buttons ändern
+
+let nextButton = document.getElementById("next");
+
+
+if(current === pages.length - 2){
+
+nextButton.innerHTML = "Lösungen →";
+
+}
+else {
+
+nextButton.innerHTML = "Weiter →";
+
+}
+
+
 }
 
 
