@@ -5,10 +5,11 @@
 <title>Simrock</title>
 
 <style>
+
 body {
   margin: 0;
   font-family: Georgia, serif;
-  background: #f5f1e6; /* buchähnliches beige */
+  background: #f5f1e6;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,6 +27,7 @@ h2 {
   font-size: 18px;
 }
 
+
 /* Buch */
 .book {
   margin-top: 30px;
@@ -36,9 +38,11 @@ h2 {
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   display: flex;
   position: relative;
+  overflow: hidden;
 }
 
-/* Falz */
+
+/* Buchfalz */
 .spine {
   position: absolute;
   left: 50%;
@@ -48,37 +52,34 @@ h2 {
   background: rgba(0,0,0,0.1);
 }
 
-/* Seiten */
+
+/* Seite */
 .page {
-  width: 50%;
-  padding: 30px;
+  width: 100%;
+  padding: 35px;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 1.6;
 }
 
-.left {
-  border-right: 1px solid rgba(0,0,0,0.05);
-}
 
-/* Lösungen */
-#solutions {
-  display: none;
-  margin-top: 10px;
-  font-size: 16px;
-  color: #333;
-}
-
-/* Button im Buch */
-.toggle {
+/* Weiter Button */
+.next {
   position: absolute;
   right: 20px;
-  bottom: 20px;
+  bottom: 15px;
+  border: none;
+  background: transparent;
+  font-family: Georgia, serif;
+  font-size: 18px;
   cursor: pointer;
-  font-size: 16px;
   color: #444;
-  user-select: none;
 }
+
+.next:hover {
+  text-decoration: underline;
+}
+
 
 /* Link unten */
 .link {
@@ -92,28 +93,62 @@ h2 {
 .link:hover {
   text-decoration: underline;
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <h1>Simrock</h1>
 <h2>eine kleine Auswahl</h2>
+
 
 <div class="book">
 
   <div class="spine"></div>
 
-  <!-- linke Seite -->
-  <div class="page left">
-    1.<br>Rathe, was ich hab vernommen:<br>
+  <div class="page" id="page">
+  </div>
+
+  <button class="next" onclick="nextPage()">
+    Weiter →
+  </button>
+
+</div>
+
+
+<a class="link" href="video.html">
+Rheinsagen
+</a>
+
+
+
+<script>
+
+
+const pages = [
+
+
+`
+<strong>Rätsel 1</strong><br><br>
+
+Rathe, was ich hab vernommen:<br>
 Es sind achtzehn kleine Gesellen zur Welt gekommen,<br>
 Von Angesicht gar säuberlich,<br>
 keiner doch dem Andern glich.<br>
 All ohne Fehler und Gebrechen,<br>
 Nur konnte Keiner Ein Wort sprechen;<br>
 Und damit man sie sollte verstehn,<br>
-Hatten sie fünf Dollmetscher mit sich gehn.<br>
+Hatten sie fünf Dollmetscher mit sich gehn.
+`,
+
+
+`
+<strong>Rätsel 1 (Fortsetzung)</strong><br><br>
+
 Das waren hochgelehrte Leut:<br>
 Der erst erstaunt, reißts Maul auf weit,<br>
 Der zweite wie ein Kindlein schreit,<br>
@@ -122,38 +157,71 @@ Der vierte wie ein Fuhrmann rief,<br>
 Der fünft gar wie ein Uhu thut:<br>
 Das waren ihre Künste gut,<br>
 Damit erhoben sie ein Geschrei,<br>
-Füllt noch die Welt, ist nicht vorbei.<br><br>
-    Rätsel 2<br>[Platzhalter]<br><br>
-    Rätsel 3<br>[Platzhalter]
-  </div>
+Füllt noch die Welt, ist nicht vorbei.
+`,
 
-  <!-- rechte Seite -->
-  <div class="page right">
-    Rätsel 4<br>[Platzhalter]<br><br>
-    Rätsel 5<br>[Platzhalter]
 
-    <div id="solutions">
-      <br>
-      Lösung 1<br>[Platzhalter]<br><br>
-      Lösung 2<br>[Platzhalter]<br><br>
-      Lösung 3<br>[Platzhalter]
-    </div>
+`
+<strong>Rätsel 2</strong><br><br>
 
-    <div class="toggle" onclick="toggleSolutions()">
-      Lösungen
-    </div>
-  </div>
+Hier kommt der Text des zweiten Rätsels.
+<br><br>
 
-</div>
+Noch kannst du weitere Rätsel hier ergänzen.
+`,
 
-<a class="link" href="video.html">Rheinsagen</a>
 
-<script>
-function toggleSolutions() {
-  const s = document.getElementById("solutions");
-  s.style.display = (s.style.display === "block") ? "none" : "block";
+`
+<strong>Rätsel 3</strong><br><br>
+
+Hier kommt der Text des dritten Rätsels.
+`,
+
+
+`
+<strong>Lösungen</strong><br><br>
+
+Lösung 1:<br>
+Hier steht die Antwort auf Rätsel 1.<br><br>
+
+Lösung 2:<br>
+Hier steht die Antwort auf Rätsel 2.<br><br>
+
+Lösung 3:<br>
+Hier steht die Antwort auf Rätsel 3.
+`
+
+];
+
+
+let currentPage = 0;
+
+
+function showPage(){
+
+  document.getElementById("page").innerHTML = pages[currentPage];
+
 }
+
+
+function nextPage(){
+
+  if(currentPage < pages.length - 1){
+
+    currentPage++;
+    showPage();
+
+  }
+
+}
+
+
+showPage();
+
+
 </script>
+
 
 </body>
 </html>
+```
