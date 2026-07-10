@@ -173,15 +173,42 @@ button:hover {
     font-size: 16px;
   }
 
-  .page {
-    padding: 15px;
-    padding-bottom: 60px;
-    font-size: 12px;
-    line-height: 1.35;
+
+  .book {
+    display: block;
+    width: 95vw;
+    height: auto;
+    aspect-ratio: auto;
+    padding-bottom: 70px;
   }
 
+
+  .page {
+    width: 100%;
+    height: auto;
+    min-height: 400px;
+    padding: 20px;
+    padding-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    overflow: visible;
+  }
+
+
+  .right {
+    border-right: none;
+  }
+
+
+  .spine {
+    display: none;
+  }
+
+
   button {
-    font-size: 14px;
+    position: absolute;
+    bottom: 20px;
+    font-size: 16px;
   }
 
 }
@@ -390,12 +417,26 @@ let current = 0;
 function showPage(){
 
 
+if(window.innerWidth <= 700){
+
+document.getElementById("leftPage").innerHTML =
+pages[current].left + "<br><hr><br>" + pages[current].right;
+
+
+document.getElementById("rightPage").innerHTML = "";
+
+}
+else {
+
+
 document.getElementById("leftPage").innerHTML =
 pages[current].left;
 
 
 document.getElementById("rightPage").innerHTML =
 pages[current].right;
+
+}
 
 
 
