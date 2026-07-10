@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simrock</title>
 
 <style>
@@ -32,26 +33,19 @@ h2 {
 /* Buch */
 
 .book {
+    margin-top: 30px;
 
-  margin-top: 30px;
+    width: min(1200px, 95vw);
+    aspect-ratio: 1200 / 650;
 
-  width: 1200px;
-  height: 650px;
+    background: #fffdf7;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 
-  background: #fffdf7;
-
-  border-radius: 10px;
-
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-
-  display: flex;
-
-  position: relative;
-
-  overflow: hidden;
-
+    display: flex;
+    position: relative;
+    overflow: hidden;
 }
-
 
 /* Falz */
 
@@ -167,8 +161,32 @@ button:hover {
 }
 
 
-</style>
+/* Handy */
 
+@media (max-width: 700px) {
+
+  h1 {
+    font-size: 30px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  .page {
+    padding: 15px;
+    padding-bottom: 60px;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  button {
+    font-size: 14px;
+  }
+
+}
+
+</style>
 </head>
 
 
@@ -351,8 +369,8 @@ Die Augen.<br><br>
 <strong>311.</strong><br>
 Katze.<br><br>
 
-*Alle Zitate sind zeilen- und buchstabengetreu Transkriptionen aus<br>
-_Das deutsche Räthselbuch.Gesammelt von Karl Simrock.<br>
+*Alle Zitate sind zeilen- und buchstabengetreu Transkriptionen aus
+_Das deutsche Räthselbuch.Gesammelt von Karl Simrock.
 Erste Auflage.Frankfurt a.M. Gedruckt 1850, Simrock-Archiv_
 
 `
